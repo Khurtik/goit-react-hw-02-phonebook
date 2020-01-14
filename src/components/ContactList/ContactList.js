@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ContactItem from '../ContactItem/ContactItem';
+import styles from './ContactList.module.css';
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, onDelete }) => {
   return (
-    <ul>
-      {contacts.map(item => (
-        <li key={item.id}>
-          {item.name} :{item.number}
-          {/* <input
-            checked={el.completed}
-            type="checkbox"
-            onChange={() => onUpdate(el.id)}
-          /> */}
-          {/* <button type="button" onClick={() => onDelete(el.id)}>
-            delete
-          </button> */}
-        </li>
-      ))}
-    </ul>
+    contacts.length > 0 && (
+      <ul className={styles.contacts}>
+        {contacts.map(item => (
+          <li className={styles.contactItem} key={item.id}>
+            <ContactItem
+              name={item.name}
+              number={item.number}
+              onDelete={() => onDelete(item.id)}
+            />
+          </li>
+        ))}
+      </ul>
+    )
   );
 };
 
 ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(PropTypes.func).isRequired,
+  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default ContactList;
